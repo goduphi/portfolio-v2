@@ -4,7 +4,7 @@ import '@fontsource/roboto';
 export const AboutStyles = makeStyles({
     root: {
         color: 'white',
-        height: '90vh',
+        height: '100vh',
     },
     author: {
         fontSize: '2rem',
@@ -13,10 +13,7 @@ export const AboutStyles = makeStyles({
     positions: {
         fontSize: '1.1rem',
     },
-    fadeOut: {
-        display: 'none',
-    },
-    fadeIn: {
-        display: 'inline-block',
+    gridHeight: {
+        height: '100vh',
     }
 });

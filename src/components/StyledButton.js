@@ -3,7 +3,17 @@ import '@fontsource/roboto';
 
 export const baseButtonStyle = makeStyles({
     root: {
-        margin: '30px 0px 30px 0px',
+        position: 'fixed',
+        zIndex: '1',
+        height: '10%',
+        transition: '0.2s ease-in-out',
+    },
+    rootScroll: {
+        position: 'fixed',
+        zIndex: '1',
+        height: '10%',
+        backgroundColor: 'rgb(30, 30, 30)',
+        transition: '0.2s ease-in-out',
     },
     navigation: {
         margin: '0px 15px 0px 15px',

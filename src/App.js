@@ -84,16 +84,14 @@ function App() {
   const classes = AppStyle();
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <Grid container className={classes.root}>
-        <Navigation currentWindowLocation={currentWindowLocation}/>
-        <Switch>
-          <Route path="/project" render={(routeLocation) => <Projects projects={projects} setCurrentLocation={setCurrentLocation} routeLocation={routeLocation} />} />
-          <Route path="/project-blog" component={ProjectBlog} />
-          <Route path="/" render={(routeLocation) => <About setCurrentLocation={setCurrentLocation} routeLocation={routeLocation} skills={{programmingLanguages, peripherals, microcontrollers}}/>} />
-        </Switch>
-      </Grid>
-    </div>
+    <Grid container justify="center" className={classes.root}>
+      <Navigation currentWindowLocation={currentWindowLocation} />
+      <Switch>
+        <Route path="/project" render={(routeLocation) => <Projects projects={projects} setCurrentLocation={setCurrentLocation} routeLocation={routeLocation} />} />
+        <Route path="/project-blog" component={ProjectBlog} />
+        <Route path="/" render={(routeLocation) => <About setCurrentLocation={setCurrentLocation} routeLocation={routeLocation} skills={{programmingLanguages, peripherals, microcontrollers}}/>} />
+      </Switch>
+    </Grid>
   );
 }
 

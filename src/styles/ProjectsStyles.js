@@ -5,6 +5,7 @@ import '../styles/Fonts.css';
 export const ProjectsStyles = makeStyles({
     root: {
         flexGrow: 1,
+        marginTop: '5%',
     },
     card: {
         height: 150,

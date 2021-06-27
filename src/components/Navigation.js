@@ -12,6 +12,12 @@ export const GITHUB_LINK = 'https://www.github.com/goduphi';
 
 export const Navigation = ({ currentWindowLocation }) => {
     const [showContactLinks, setShowContactLinks] = useState(false);
+    const [scrolling, setScrolling] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScrollChange);
+        return () => window.removeEventListener('scroll', onScrollChange);
+    }, []);
 
     useEffect(() => {
         setShowContactLinks(currentWindowLocation !== '/');
@@ -19,8 +25,12 @@ export const Navigation = ({ currentWindowLocation }) => {
 
     const classes = baseButtonStyle();
 
+    const onScrollChange = () => {
+        setScrolling(window.scrollY < 80);
+    }
+
     return (
-        <Grid container justify="center" className={classes.root}>
+        <Grid container justify="center" alignItems="center" className={scrolling ? classes.root : classes.rootScroll}>
             <Link component={RouterLink} to="/" underline="none">
                 <Tooltip title="About">
                     <span>

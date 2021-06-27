@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useIntersection } from 'react-use';
 import { Grid, Typography } from '@material-ui/core';
+import { useSpring, animated, config } from 'react-spring';
 import { AboutStyles } from '../styles/AboutStyles';
 import { ModedList } from './ModedList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,14 +18,49 @@ export const About = ({ setCurrentLocation, routeLocation, skills }) => {
         rootMargin: '0px',
         threshold: 0.5,
     });
+
+    const [props, api] = useSpring(() => (
+        {
+            to: { 
+                  opacity: 1,
+                  transform: 'translate(0px, 0px)'
+                },
+            from: {
+                  opacity: 0,
+                  transform: 'translate(0px, 20px)',
+                },
+            delay: 300,
+        }
+    ));
+
+    const [skillProps, skillApi] = useSpring(() => (
+        {
+            to: {
+                    transform: 'translate(0px, 0px)',
+                },
+            from: {
+                    transform: 'translate(0px, 30px)',
+                },
+            reset: true,
+            reverse: visible,
+            delay: 300,
+            config: config.molasses,
+        }
+    ));
+
+    const AnimatedGrid = animated(Grid);
     
     useEffect(() => {
         setCurrentLocation(routeLocation.location.pathname);
     });
 
     useEffect(() => {
-        intersection && setVisible(intersection.intersectionRatio > 0.5);
+        intersection && setVisible((intersection.intersectionRatio >= 0.5));
     }, [intersection]);
+
+    useEffect(() => {
+        skillApi.start({ opacity: (visible ? 1 : 0)});
+    }, [visible, skillApi]);
 
     const classes = AboutStyles();
 
@@ -33,7 +69,7 @@ export const About = ({ setCurrentLocation, routeLocation, skills }) => {
             container
             className={classes.root}
         >
-            <Grid container xs={12} style={{ height: '100vh', }}>
+            <AnimatedGrid container xs={12} style={props} className={classes.gridHeight}>
                 <Grid container direction="column" alignItems="center" justify="center">
                     <Grid>
                         <Typography className={classes.author}>SARKER NADIR AFRIDI AZMI</Typography>
@@ -43,9 +79,8 @@ export const About = ({ setCurrentLocation, routeLocation, skills }) => {
                         <FontAwesomeIcon icon={faLinkedinIn} size="2x" style={{ padding: 10, }} />
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid ref={skillsSection} container alignItems="center" style={{ height: '100vh', }}>
-                {visible ?
+            </AnimatedGrid>
+            <AnimatedGrid ref={skillsSection} container alignItems="center" style={skillProps} className={classes.gridHeight}>
                 <Grid container justify="center" xs={12}>
                     <Grid item direction="column" xs={12} md>
                         <Grid container alignItems="center" style={{ paddingLeft: '4%' }}><FontAwesomeIcon icon={faPython} fixedWidth size="2x" /><Typography>Programming Languages</Typography></Grid>
@@ -60,10 +95,7 @@ export const About = ({ setCurrentLocation, routeLocation, skills }) => {
                         <ModedList items={skills.microcontrollers} />
                     </Grid>
                 </Grid>
-                :
-                null
-                }
-            </Grid>
+            </AnimatedGrid>
         </Grid>
     );
 }
